@@ -23,6 +23,7 @@ Ext.define('Traccar.view.SettingsMenuController', {
         'Traccar.view.dialog.LoginController',
         'Traccar.view.dialog.User',
         'Traccar.view.dialog.Server',
+        'Traccar.view.dialog.About',
         'Traccar.view.edit.Users',
         'Traccar.view.edit.Groups',
         'Traccar.view.edit.Geofences',
@@ -172,6 +173,11 @@ Ext.define('Traccar.view.SettingsMenuController', {
                 xtype: 'maintenancesView'
             }
         }).show();
+    },
+
+    onAboutClick: function () {
+        var dialog = Ext.create('Traccar.view.dialog.About');
+        dialog.show();
     },
 
     onLogoutClick: function () {
