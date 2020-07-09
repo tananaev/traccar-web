@@ -66,5 +66,9 @@ Ext.define('Traccar.store.UserAttributes', {
         key: 'mail.smtp.password',
         name: Strings.attributeMailSmtpPassword,
         valueType: 'string'
+    }, {
+        key: 'notificator.pushover.device',
+        name: Strings.attributeNotificatorPushoverDevice,
+        valueType: 'string'
     }]
 });
