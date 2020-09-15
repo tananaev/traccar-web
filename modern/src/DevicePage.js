@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, Fragment, useState } from 'react';
 import MainToobar from './MainToolbar';
 import { useHistory, useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,7 +6,6 @@ import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
-
 import t from './common/localization';
 
 const useStyles = makeStyles(theme => ({
@@ -29,6 +28,9 @@ const DevicePage = () => {
   const [device, setDevice] = useState();
   const [name, setName] = useState('');
   const [uniqueId, setUniqueId] = useState('');
+  const [phone, setPhone] = useState('');
+  const [model, setModel] = useState('');
+  const [contact, setContact] = useState('');
 
   useEffect(() => {
     fetch(`/api/devices/${id}`).then(response => {
@@ -42,6 +44,9 @@ const DevicePage = () => {
     const updatedDevice = id ? device : {};
     updatedDevice.name = name || updatedDevice.name;
     updatedDevice.uniqueId = uniqueId || updatedDevice.uniqueId;
+    updatedDevice.phone = phone || updatedDevice.phone;
+    updatedDevice.model = model || updatedDevice.model;
+    updatedDevice.contact = contact || updatedDevice.contact;
 
     let request;
     if (id) {
@@ -71,22 +76,47 @@ const DevicePage = () => {
       <Container maxWidth='xs' className={classes.container}>
         <form>
           {(!id || device) &&
-            <TextField
-              margin='normal'
-              fullWidth
-              defaultValue={device && device.name}
-              onChange={(event) => setName(event.target.value)}
-              label={t('sharedName')}
-              variant='filled' />
-          }
-          {(!id || device) &&
-            <TextField
-              margin='normal'
-              fullWidth
-              defaultValue={device && device.uniqueId}
-              onChange={(event) => setUniqueId(event.target.value)}
-              label={t('deviceIdentifier')}
-              variant='filled' />
+            <Fragment>
+              <TextField
+                margin='normal'
+                fullWidth
+                defaultValue={device && device.name}
+                onChange={(event) => setName(event.target.value)}
+                label={t('sharedName')}
+                variant='filled' />
+
+              <TextField
+                margin='normal'
+                fullWidth
+                defaultValue={device && device.uniqueId}
+                onChange={(event) => setUniqueId(event.target.value)}
+                label={t('deviceIdentifier')}
+                variant='filled' />
+
+              <TextField
+                margin='normal'
+                fullWidth
+                defaultValue={device && device.phone}
+                onChange={(event) => setPhone(event.target.value)}
+                label={t('sharedPhone')}
+                variant='filled' />
+
+              <TextField
+                margin='normal'
+                fullWidth
+                defaultValue={device && device.model}
+                onChange={(event) => setModel(event.target.value)}
+                label={t('deviceModel')}
+                variant='filled' />
+
+              <TextField
+                margin='normal'
+                fullWidth
+                defaultValue={device && device.contact}
+                onChange={(event) => setContact(event.target.value)}
+                label={t('deviceContact')}
+                variant='filled' />
+            </Fragment>
           }
           <FormControl fullWidth margin='normal'>
             <div className={classes.buttons}>
