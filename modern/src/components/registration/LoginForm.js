@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Grid, useMediaQuery, makeStyles, InputLabel, Select, MenuItem, FormControl, Button, TextField, Link } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { sessionActions } from '../../store';
-import t from '../../common/localization';
+import t, {languageList} from '../../common/localization';
 import StartPage from './../../StartPage';
+import { LanguageContext } from "../../LanguageProvider";
 
 const useStyles = makeStyles(theme => ({
   logoContainer: {
@@ -19,6 +20,7 @@ const useStyles = makeStyles(theme => ({
 
 const LoginForm = () => {
 
+  const languageContext = useContext(LanguageContext);
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -55,6 +57,10 @@ const LoginForm = () => {
     if (e.keyCode === 13 && email && password) {
       handleLogin(e);
     }
+  }
+
+  const handleLanguageChange = e => {
+    languageContext.setLanguage(e.target.value);
   }
 
   return (
@@ -116,8 +122,8 @@ const LoginForm = () => {
           <Grid item xs>
             <FormControl variant="filled" fullWidth>
               <InputLabel>{t('loginLanguage')}</InputLabel>
-              <Select>
-                <MenuItem value="en">English</MenuItem>
+              <Select value={languageContext.language} onChange={handleLanguageChange}>
+                {languageList.map(lang => <MenuItem key={lang.code} value={lang.code}>{lang.name}</MenuItem>)}
               </Select>
             </FormControl>
           </Grid>
